@@ -4,3 +4,6 @@
 [submodule "ext/find_orb"]
 	path = ext/find_orb
 	url = https://github.com/lcreid/find_orb.git
+[submodule "ext/sgp4sdp4/sat_code"]
+	path = ext/sgp4sdp4/sat_code
+	url = https://github.com/lcreid/sat_code.git
