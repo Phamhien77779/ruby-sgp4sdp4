@@ -2,8 +2,6 @@
 
 module Sgp4sdp4
   class Tle
-    def initialize(tle); end
-
     attr_reader :epoch,
       :xndt2o,
       :xndd6o,
