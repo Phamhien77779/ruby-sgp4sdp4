@@ -1,6 +1,3 @@
-[submodule "ext/sgp4sdp4"]
-	path = ext/sgp4sdp4
-	url = https://github.com/lcreid/sat_code.git
 [submodule "ext/sgp4sdp4/sat_code"]
 	path = ext/sgp4sdp4/sat_code
 	url = https://github.com/lcreid/sat_code.git
