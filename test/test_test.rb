@@ -45,8 +45,7 @@ class TestTest < MiniTest::Test
 
   answers = {
     fake_1: {
-      ephemeris: %i[sgp sgp4 sgp8],
-      answers: {
+      sgp: {
         "0": {
           pos: Coordinates.new(2328.96594238, -5995.21600342, 1719.97894287),
           vel: Coordinates.new(2.91110113, -0.98164053, -7.09049922)
@@ -67,22 +66,88 @@ class TestTest < MiniTest::Test
           pos: Coordinates.new(2742.85470581, -6079.13580322, -328.86091614),
           vel: Coordinates.new(1.94707947, 1.21346101, -7.35499924)
         }
+      },
+      sgp4: {
+        "0": {
+          pos: Coordinates.new(2328.97048951,  -5995.22076416,   1719.97067261),
+          vel: Coordinates.new(2.91207230,     -0.98341546,      -7.09081703)
+        },
+        "360": {
+          pos: Coordinates.new(2456.10705566,  -6071.93853760,   1222.89727783),
+          vel: Coordinates.new(2.67938992,     -0.44829041,      -7.22879231)
+        },
+        "720": {
+          pos: Coordinates.new(2567.56195068,  -6112.50384522,    713.96397400),
+          vel: Coordinates.new(2.44024599, 0.09810869, -7.31995916)
+        },
+        "1080": {
+          pos: Coordinates.new(2663.09078980, -6115.48229980, 196.39640427),
+          vel: Coordinates.new(2.19611958, 0.65241995, -7.36282432)
+        },
+        "1440": {
+          pos: Coordinates.new(2742.55133057, -6079.67144775, -326.38095856),
+          vel: Coordinates.new(1.94850229, 1.21106251, -7.35619372)
+        }
+      },
+      sgp8: {
+        "0": {
+          pos: Coordinates.new(2328.87265015,  -5995.21289063,   1720.04884338),
+          vel: Coordinates.new(2.91210661,     -0.98353850,      -7.09081554)
+        },
+        "360": {
+          pos: Coordinates.new(2456.04577637,  -6071.90490722,   1222.84086609),
+          vel: Coordinates.new(2.67936245,     -0.44820847,      -7.22888553)
+        },
+        "720": {
+          pos: Coordinates.new(2567.68383789,  -6112.40881348,    713.29282379),
+          vel: Coordinates.new(2.43992555, 0.09893919, -7.32018769)
+        },
+        "1080": {
+          pos: Coordinates.new(2663.49508667, -6115.18182373, 194.62816810),
+          vel: Coordinates.new(2.19525236, 0.65453661, -7.36308974)
+        },
+        "1440": {
+          pos: Coordinates.new(2743.29238892, -6078.90783691, -329.73434067),
+          vel: Coordinates.new(1.94680957, 1.21500109, -7.35625595)
+        }
       }
-    }
+    } # ,
+    # fake_2: {
+    #   sdp4: {
+    #     "0": {
+    #       pos: Coordinates.new(7473.37066650, 428.95261765, 5828.74786377),
+    #       vel: Coordinates.new(5.10715413, 6.44468284, -0.18613096)
+    #     },
+    #     "360": {
+    #       pos: Coordinates.new(-3305.22537232, 32_410.86328125, -24_697.1767581),
+    #       vel: Coordinates.new(-1.30113538, -1.15131518, -0.28333528)
+    #     },
+    #     "720": {
+    #       pos: Coordinates.new(14_271.28759766, 24_110.46411133, -4725.76837158),
+    #       vel: Coordinates.new(-0.32050445, 2.67984074, -2.08405289)
+    #     },
+    #     "1080": {
+    #       pos: Coordinates.new(-9990.05883789, 22_717.35522461, -23_616.89062501),
+    #       vel: Coordinates.new(-1.01667246, -2.29026759, 0.72892364)
+    #     },
+    #     "1440": {
+    #       pos: Coordinates.new(9787.86975097, 33_753.34667969, -15_030.81176758),
+    #       vel: Coordinates.new(-1.09425066, 0.92358845, -1.52230928)
+    #     }
+    #   }
+    # }
   }
 
   epsilons = {
     sgp: 1e-4,
-    sgp4: 1e-2,
-    sgp8: 1e-2
+    sgp4: 1e-4,
+    sgp8: 1e-4
   }
 
   # NOTE: test_sat.cpp doesn't cover everything.
   answers.each_pair do |satellite, params|
-    satellite_answers = params[:answers]
-    params[:ephemeris].each do |ephemeris|
-      # puts "satellite: #{satellite} ephemeris: #{ephemeris} answers: #{satellite_answers}"
-      satellite_answers.each_pair do |since, answer|
+    params.each_pair do |ephemeris, answers|
+      answers.each_pair do |since, answer|
         define_method("test_#{satellite}_#{ephemeris}_#{since}") do
           tle = satellites[satellite.to_sym]
           # Works because my names are ASCII
