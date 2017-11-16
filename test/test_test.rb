@@ -45,7 +45,7 @@ class TestTest < MiniTest::Test
 
   answers = {
     fake_1: {
-      ephemeris: %i[sgp sgp4],
+      ephemeris: %i[sgp sgp4 sgp8],
       answers: {
         "0": {
           pos: Coordinates.new(2328.96594238, -5995.21600342, 1719.97894287),
@@ -74,9 +74,10 @@ class TestTest < MiniTest::Test
   epsilons = {
     sgp: 1e-4,
     sgp4: 1e-2,
-    spg8: 1e-6
+    sgp8: 1e-2
   }
 
+  # NOTE: test_sat.cpp doesn't cover everything.
   answers.each_pair do |satellite, params|
     satellite_answers = params[:answers]
     params[:ephemeris].each do |ephemeris|
@@ -84,6 +85,7 @@ class TestTest < MiniTest::Test
       satellite_answers.each_pair do |since, answer|
         define_method("test_#{satellite}_#{ephemeris}_#{since}") do
           tle = satellites[satellite.to_sym]
+          # Works because my names are ASCII
           propagator = Module.const_get("Sgp4sdp4::" + ephemeris.to_s.capitalize).new(tle)
           propagator.calculate(since.to_s.to_f)
           assert_in_epsilon answer[:pos].x, propagator.pos.x, epsilons[ephemeris]
@@ -96,31 +98,4 @@ class TestTest < MiniTest::Test
       end
     end
   end
-
-  # FIXME: Make the rest work when one is working.
-  # %i[sgp sgp4 sgp8 sdp4 sdp8].each do |ephemeris|
-  # NOTE: test_sat.cpp looks to me to be bogus.
-  # It doesn't have enough answers to cover the cases it purports to test.
-  # %i[sgp].each do |ephemeris|
-  #   delta = 360
-  #   0.upto(1440 / delta).map { |i| i * delta }.each do |since|
-  #     define_method("test_#{ephemeris}_#{since}") do
-  #       # Works because my names are ASCII
-  #       @satellites.each_pair do |satellite, tle|
-  #         propagator = Module.const_get("Sgp4sdp4::" + ephemeris.to_s.capitalize).new(tle)
-  #         puts "#{satellite}: #{propagator.calculate(since)}"
-  #         # puts "since: #{since}"
-  #         # puts ephemeris
-  #         # puts @answers[ephemeris]
-  #         # puts @answers[ephemeris][since.to_s]
-  #         assert_in_epsilon @answers[ephemeris][since.to_s.to_sym][:pos].x, propagator.pos.x, 1e-6
-  #         assert_in_epsilon @answers[ephemeris][since.to_s.to_sym][:pos].y, propagator.pos.y, 1e-6
-  #         assert_in_epsilon @answers[ephemeris][since.to_s.to_sym][:pos].z, propagator.pos.z, 1e-6
-  #         assert_in_epsilon @answers[ephemeris][since.to_s.to_sym][:vel].x, propagator.vel.x, 1e-6
-  #         assert_in_epsilon @answers[ephemeris][since.to_s.to_sym][:vel].y, propagator.vel.y, 1e-6
-  #         assert_in_epsilon @answers[ephemeris][since.to_s.to_sym][:vel].z, propagator.vel.z, 1e-6
-  #       end
-  #     end
-  #   end
-  # end
 end
