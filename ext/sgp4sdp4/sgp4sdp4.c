@@ -15,6 +15,8 @@ void Init_sgp4sdp4() {
   Init_sgp4sdp4_sgp();
   Init_sgp4sdp4_sgp4();
   Init_sgp4sdp4_sgp8();
+  Init_sgp4sdp4_sdp4();
+  Init_sgp4sdp4_sdp8();
 
   // This may come out someday:
   rb_define_singleton_method(mSgp4sdp4, "parse_elements", rb_parse_elements, 1);
