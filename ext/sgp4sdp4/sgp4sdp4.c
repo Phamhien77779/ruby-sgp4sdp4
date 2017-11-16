@@ -11,7 +11,9 @@ void Init_sgp4sdp4() {
   cSgp4sdp4_ephemeris = rb_define_class_under(mSgp4sdp4, "Ephemeris", rb_cObject);
   cSgp4sdp4_coordinates = rb_define_class_under(mSgp4sdp4, "Coordinates", rb_cObject);
   Init_sgp4sdp4_tle();
+  Init_sgp4sdp4_ephemeris();
   Init_sgp4sdp4_sgp();
+  Init_sgp4sdp4_sgp4();
 
   // This may come out someday:
   rb_define_singleton_method(mSgp4sdp4, "parse_elements", rb_parse_elements, 1);

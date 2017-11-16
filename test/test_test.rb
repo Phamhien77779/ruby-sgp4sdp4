@@ -73,14 +73,14 @@ class TestTest < MiniTest::Test
 
   epsilons = {
     sgp: 1e-4,
-    sgp4: 1e-6,
-    spg8: 1e-8
+    sgp4: 1e-2,
+    spg8: 1e-6
   }
 
   answers.each_pair do |satellite, params|
     satellite_answers = params[:answers]
     params[:ephemeris].each do |ephemeris|
-      puts "satellite: #{satellite} ephemeris: #{ephemeris} answers: #{satellite_answers}"
+      # puts "satellite: #{satellite} ephemeris: #{ephemeris} answers: #{satellite_answers}"
       satellite_answers.each_pair do |since, answer|
         define_method("test_#{satellite}_#{ephemeris}_#{since}") do
           tle = satellites[satellite.to_sym]
