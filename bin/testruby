@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), "..", "lib")
+require "sgp4sdp4"
+
+def output_line(t, ephemeris)
+  ephemeris.calculate(t)
+  puts "#{t} #{ephemeris.pos} #{ephemeris.vel}"
+end
+
+def output(tle_array, start_time, end_time, delta)
+  # puts tle_array
+  ephemeris = Sgp4sdp4::Sgp4.new(tle_array)
+  puts "#{ephemeris.tle.norad_number} xx"
+  output_line(0.0, ephemeris) unless start_time.abs <= 1e-8
+
+  loop do
+    output_line(start_time, ephemeris)
+    break if start_time >= end_time
+    start_time += delta
+  end
+
+  0.upto([1, (end_time - start_time) / delta].max) do |i|
+  end
+end
+
+tle_array = []
+ARGF.each_with_index do |line, x|
+  next if line =~ /^\w*#/
+  tle_array = [line] if line[0] == "1"
+  if line[0] == "2"
+    tle_array << line[0, 69]
+    puts line[69..-1]
+    start_time, end_time, delta = line[69..-1].split(" ").map(&:to_f)
+    puts "#{start_time}, #{end_time}, #{delta}"
+    output(tle_array, start_time, end_time, delta)
+  end
+end

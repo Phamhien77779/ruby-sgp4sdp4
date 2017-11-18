@@ -9,7 +9,7 @@ module Sgp4sdp4
     end
 
     def to_s
-      "x: #{x} y: #{y} z: #{z}"
+      "#{x} #{y} #{z}"
     end
 
     attr_reader :x, :y, :z
