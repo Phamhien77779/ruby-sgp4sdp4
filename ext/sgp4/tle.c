@@ -1,7 +1,7 @@
 #include <sgp4.h>
 #include <sgp4io.h>
 
-static void tle_free(satrec *tle) {
+static void tle_free(elsetrec *tle) {
   free(tle);
 }
 
@@ -24,17 +24,17 @@ static VALUE initialize(VALUE self, VALUE rb_array) {
   VALUE line1 = rb_ary_entry(rb_array, 0);
   VALUE line2 = rb_ary_entry(rb_array, 1);
 
-  Data_Get_Struct(self, elsetrec*, satrec);
+  Data_Get_Struct(self, elsetrec, satrec);
   twoline2rv(StringValueCStr(line1),
     StringValueCStr(line2),
     'm', // typerun, Hard code to manual operation.
     'm', // typeinput, Believed to be don't care with the other hard coding.
     'i', // opsmode, Hard code to "improved" instead of best guess of AFSPC.
     whichconst,
-    startmfe,
-    stopmfe,
-    deltamin,
-    *satrec);
+    &startmfe,
+    &stopmfe,
+    &deltamin,
+    satrec);
 
   if (satrec-> error != 0) {
     rb_raise(rb_eRuntimeError, "Unparseable two-line elements");
