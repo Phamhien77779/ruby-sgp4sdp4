@@ -16,12 +16,9 @@ def output(tle_array, start_time, end_time, delta)
   output_line(0.0, ephemeris) unless start_time.abs <= 1e-8
 
   loop do
-    output_line(start_time, ephemeris)
+    output_line([start_time, end_time].min, ephemeris)
     break if start_time >= end_time
     start_time += delta
-  end
-
-  0.upto([1, (end_time - start_time) / delta].max) do |i|
   end
 end
 
