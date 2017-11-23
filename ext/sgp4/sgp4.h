@@ -7,5 +7,6 @@
 extern VALUE mSgp4;
 
 extern void Init_sgp4_tle();
+extern void Init_sgp4_sgp4();
 
 #endif

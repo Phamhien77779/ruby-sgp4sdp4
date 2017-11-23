@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), "..", "lib")
-require "sgp4sdp4"
+require "sgp4"
 
 def output_line(t, ephemeris)
   ephemeris.calculate(t)
@@ -11,7 +11,7 @@ end
 
 def output(tle_array, start_time, end_time, delta)
   # puts tle_array
-  ephemeris = Sgp4sdp4::Sgp4.new(tle_array)
+  ephemeris = Sgp4::Sgp4.new(tle_array)
   puts "#{ephemeris.tle.norad_number} xx"
   output_line(0.0, ephemeris) unless start_time.abs <= 1e-8
 
