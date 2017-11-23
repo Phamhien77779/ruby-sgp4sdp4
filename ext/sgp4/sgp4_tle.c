@@ -12,7 +12,7 @@ static VALUE allocate(VALUE self) {
 static VALUE initialize(VALUE self, VALUE rb_array) {
   char *l1;
 
-  // Needed for woftware the way it was packaged.
+  // Needed for software the way it was packaged.
   gravconsttype whichconst = wgs84; // Hard code for now.
   elsetrec *satrec;
   // Only needed for interface to function:
