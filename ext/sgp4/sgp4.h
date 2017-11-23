@@ -2,6 +2,7 @@
 #define SGP4
 
 #include <ruby.h>
+#include <sgp4wrapper.h>
 
 extern VALUE mSgp4;
 

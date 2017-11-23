@@ -81,7 +81,7 @@ optflags = -O3 -fno-fast-math
 debugflags = -ggdb3
 warnflags = -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat -Wno-maybe-uninitialized
 CCDLFLAGS = -fPIC
-CFLAGS   = $(CCDLFLAGS) -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -fPIC -x c $(ARCH_FLAG)
+CFLAGS   = $(CCDLFLAGS) -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -fPIC $(ARCH_FLAG)
 INCFLAGS = -I. -I$(arch_hdrdir) -I$(hdrdir)/ruby/backward -I$(hdrdir) -I$(srcdir)
 DEFS     = 
 CPPFLAGS =  -Wdate-time -D_FORTIFY_SOURCE=2 $(DEFS) $(cppflags)
@@ -136,10 +136,10 @@ extout_prefix =
 target_prefix = /sgp4
 LOCAL_LIBS = 
 LIBS = $(LIBRUBYARG_SHARED)  -lpthread -lgmp -ldl -lcrypt -lm   -lc
-ORIG_SRCS = sgp4.c tle.c sgp4ext.cpp sgp4io.cpp sgp4unit.cpp
+ORIG_SRCS = sgp4.c tle.c sgp4ext.cpp sgp4io.cpp sgp4wrapper.cpp sgp4unit.cpp
 SRCS = $(ORIG_SRCS) 
-OBJS = sgp4.o sgp4ext.o sgp4io.o sgp4unit.o tle.o
-HDRS = $(srcdir)/sgp4io.h $(srcdir)/sgp4unit.h $(srcdir)/sgp4.h $(srcdir)/sgp4ext.h
+OBJS = sgp4.o sgp4ext.o sgp4io.o sgp4unit.o sgp4wrapper.o tle.o
+HDRS = $(srcdir)/sgp4io_for_c.h $(srcdir)/sgp4wrapper.h $(srcdir)/sgp4io.h $(srcdir)/sgp4unit_for_c.h $(srcdir)/sgp4types.h $(srcdir)/sgp4unit.h $(srcdir)/sgp4.h $(srcdir)/sgp4ext.h
 TARGET = sgp4
 TARGET_NAME = sgp4
 TARGET_ENTRY = Init_$(TARGET_NAME)
