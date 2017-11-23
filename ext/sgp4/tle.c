@@ -26,7 +26,7 @@ static VALUE initialize(VALUE self, VALUE rb_array) {
   Data_Get_Struct(self, elsetrec, satrec);
   twoline2rv_c(StringValueCStr(line1),
     StringValueCStr(line2),
-    'm', // typerun, Hard code to manual operation.
+    'c', // typerun, Hard code to get useless start and stop time.
     'm', // typeinput, Believed to be don't care with the other hard coding.
     'i', // opsmode, Hard code to "improved" instead of best guess of AFSPC.
     whichconst,

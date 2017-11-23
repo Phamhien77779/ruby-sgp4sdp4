@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Sgp4sdp4
+module Sgp4
   class Tle
     attr_reader :xndt2o,
       :bstar,
