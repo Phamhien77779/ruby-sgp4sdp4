@@ -20,17 +20,18 @@ def output(tle_array, start_time, end_time, delta)
     break if start_time >= end_time
     start_time += delta
   end
+rescue RuntimeError => e
+  puts e
 end
 
 tle_array = []
-ARGF.each_with_index do |line, x|
+ARGF.each_with_index do |line, _x|
   next if line =~ /^\w*#/
   tle_array = [line] if line[0] == "1"
-  if line[0] == "2"
-    tle_array << line[0, 69]
-    puts line[69..-1]
-    start_time, end_time, delta = line[69..-1].split(" ").map(&:to_f)
-    puts "#{start_time}, #{end_time}, #{delta}"
-    output(tle_array, start_time, end_time, delta)
-  end
+  next unless line[0] == "2"
+  tle_array << line[0, 69]
+  # puts line[69..-1]
+  start_time, end_time, delta = line[69..-1].split(" ").map(&:to_f)
+  # puts "#{start_time}, #{end_time}, #{delta}"
+  output(tle_array, start_time, end_time, delta)
 end
