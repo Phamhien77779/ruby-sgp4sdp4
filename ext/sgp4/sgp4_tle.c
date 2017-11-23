@@ -39,6 +39,8 @@ static VALUE initialize(VALUE self, VALUE rb_array) {
     rb_raise(rb_eRuntimeError, "Unparseable two-line elements");
   }
 
+  rb_iv_set(self, "@gravitational_constant", INT2NUM(whichconst));
+
   // printf("tle.epoch: %lf\n", tle.epoch);
 
   // rb_iv_set(self, "@epoch", DBL2NUM(satrec-> epoch));

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "sgp4/sgp4"
+require "sgp4/sgp4/coordinates"
 require "sgp4/sgp4/sgp4"
 require "sgp4/sgp4/tle"
 
