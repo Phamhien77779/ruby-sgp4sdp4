@@ -55,10 +55,6 @@
 
 #define pi 3.14159265358979323846
 
-#ifndef __cplusplus
-typedef int bool;
-#endif
-
 // -------------------------- structure declarations ----------------------------
 typedef enum
 {
@@ -104,20 +100,12 @@ bool sgp4init
        gravconsttype whichconst,  char opsmode,  const int satn,     const double epoch,
        const double xbstar,  const double xecco, const double xargpo,
        const double xinclo,  const double xmo,   const double xno,
-#ifdef __cplusplus
        const double xnodeo,  elsetrec& satrec
-#else
-       const double xnodeo,  elsetrec* satrec
-#endif
      );
 
 bool sgp4
      (
-#ifdef __cplusplus
        gravconsttype whichconst, elsetrec& satrec,  double tsince,
-#else
-       gravconsttype whichconst, elsetrec* satrec,  double tsince,
-#endif
        double r[3],  double v[3]
      );
 
@@ -129,7 +117,6 @@ double  gstime
 void getgravconst
      (
       gravconsttype whichconst,
-#ifdef __cplusplus
       double& tumin,
       double& mu,
       double& radiusearthkm,
@@ -138,16 +125,7 @@ void getgravconst
       double& j3,
       double& j4,
       double& j3oj2
-#else
-      double* tumin,
-      double* mu,
-      double* radiusearthkm,
-      double* xke,
-      double* j2,
-      double* j3,
-      double* j4,
-      double* j3oj2
-#endif
      );
 
 #endif
+
