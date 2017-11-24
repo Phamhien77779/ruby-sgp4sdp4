@@ -13,6 +13,7 @@ static VALUE calculate(VALUE self, VALUE since) {
   // puts("ABOUT TO CALCULATE.");
   // printf("ABOUT TO CALCULATE. %f\n", NUM2DBL(since));
   sgp4_c(NUM2INT(gravitational_constant), satrec, NUM2DBL(since), pos, vel);
+  // FIXME: Raise an exception when satrec-> error != 0
   rPos = rb_obj_alloc(cSgp4_coordinates);
   rb_funcall(rPos, rb_intern("initialize"), 3, DBL2NUM(pos[0]), DBL2NUM(pos[1]), DBL2NUM(pos[2]));
   rb_iv_set(self, "@pos", rPos);
