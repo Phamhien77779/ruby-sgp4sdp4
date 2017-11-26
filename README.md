@@ -42,7 +42,7 @@ as much as possible.
 # Contributions
 Contributions are welcome.
 Please note that this project is released with a
-[Contributor Code of Conduct](https://github.com/lcreid/ruby-sgp4sdp4/code-of-conduct.md).
+[Contributor Code of Conduct](https://github.com/lcreid/ruby-sgp4sdp4/blob/master/code-of-conduct.md).
 By participating in this project you agree to abide by its terms.
 
 My apologies for not documenting more thoroughly
