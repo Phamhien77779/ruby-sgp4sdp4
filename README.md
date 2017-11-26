@@ -10,7 +10,6 @@ This code is very much a work in progress.
 # Road Map
 The priorities right now are to:
 
-* Implement more automated tests
 * Update this README with more instructions on contributing
 * Understand what's causing the differences between the test results
 from the Celestrak source code, and this code
@@ -42,6 +41,10 @@ as much as possible.
 
 # Contributions
 Contributions are welcome.
+Please note that this project is released with a
+[Contributor Code of Conduct](https://github.com/lcreid/ruby-sgp4sdp4/code-of-conduct.md).
+By participating in this project you agree to abide by its terms.
+
 My apologies for not documenting more thoroughly
 how to contribute.
 For now what I can say is that we use a fairly common process.
