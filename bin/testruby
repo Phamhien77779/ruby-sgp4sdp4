@@ -26,7 +26,7 @@ end
 
 tle_array = []
 ARGF.each_with_index do |line, _x|
-  next if line =~ /^\w*#/
+  next if line =~ /^\s*#/
   tle_array = [line] if line[0] == "1"
   next unless line[0] == "2"
   tle_array << line[0, 69]
