@@ -141,6 +141,10 @@ class TestTest < MiniTest::Test
     sdp8: 1e-4
   }
 
+  # The code from here down basically sets up to test all the satellites
+  # in `test/SGP4-VER.TLE` against the results in `test/tcppver.out`.
+  # (`test/tcppver.out` is the same as `test/tcpvera.out`.)
+
   def self.read_answers
     answers = {}
     File.open("test/tcppver.out") do |f|
