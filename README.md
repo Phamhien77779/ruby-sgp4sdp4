@@ -10,7 +10,6 @@ This code is very much a work in progress.
 # Road Map
 The priorities right now are to:
 
-* Update this README with more instructions on contributing
 * Understand what's causing the differences between the test results
 from the Celestrak source code, and this code
 * Document the methods
@@ -35,7 +34,7 @@ from [Bill Gray's Github](https://github.com/Bill-Gray/sat_code).
 I'm not currently working on this code,
 and I'm not confident that the answers I'm getting are correct
 
-One important implementation goal I have is to leave the propagation code
+One important implementation goal is to leave the propagation code
 exactly as it is from the original source,
 as much as possible.
 
@@ -45,18 +44,27 @@ Please note that this project is released with a
 [Contributor Code of Conduct](https://github.com/lcreid/ruby-sgp4sdp4/blob/master/code-of-conduct.md).
 By participating in this project you agree to abide by its terms.
 
-My apologies for not documenting more thoroughly
-how to contribute.
-For now what I can say is that we use a fairly common process.
-If you want to contribute:
+If you want to contribute a new feature or fix a defect:
 
-* Add an issue to this repository proposing the addition or change,
+* [Add an issue](https://github.com/lcreid/ruby-sgp4sdp4/issues/new target="_blank") to this repository proposing the addition or change,
 or identifying the defect you wish to fix
-* Although it's unlikely that I'll refuse any reasonable offer of help,
-you may want to wait for me to say, "go ahead" before you do too much work
-* Fork this repository
-* Add your code. All code must be tested by automated tests
-* Submit a pull request
+* Wait until you're assigned the issue.
+All offers of help are appreciated,
+but sometimes suggested functionality would be better handled
+by another component,
+or someone may have some useful information
+that would make your change easier
+* When you get the approval for the change, fork this repository ([How to fork a Github respository](https://help.github.com/articles/fork-a-repo/).)
+* Add automated tests using [`MiniTest`](https://github.com/seattlerb/minitest).
+Put tests under the `test` directory,
+with a file name that ends in `_test.rb`
+* Run tests by typing `rake test`.
+Note that right now many of the tests fail.
+We hope to fix that in the near future
+* [Create a pull request](https://help.github.com/articles/creating-a-pull-request/)
+* There will likely be some comments on your code.
+Work with the reviewers until everyone is happy
+* Your code will then be merged by one of the committers
 
 # References
 
