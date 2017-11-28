@@ -36,22 +36,7 @@ static VALUE initialize(VALUE self, VALUE rb_array) {
     satrec);
 
   if (satrec-> error != 0) {
-    static char* error_messages[] = {
-      "mean elements, ecc >= 1.0 or ecc < -0.001 or a < 0.95 er",
-      "mean motion less than 0.0",
-      "pert elements, ecc < 0.0  or  ecc > 1.0",
-      "semi-latus rectum < 0.0",
-      "epoch elements are sub-orbital",
-      "satellite has decayed",
-      "unknown error code"
-    };
-    size_t error_index = satrec-> error - 1;
-
-    if (sizeof error_messages <= error_index) {
-      error_index = sizeof(error_messages) - 1;
-    }
-
-    rb_raise(rb_eRuntimeError, "Unparseable two-line elements: %s", error_messages[error_index]);
+    rb_raise(rb_eRuntimeError, "Unparseable two-line elements: %s", error_message(satrec-> error));
   }
 
   rb_iv_set(self, "@gravitational_constant", INT2NUM(whichconst));
