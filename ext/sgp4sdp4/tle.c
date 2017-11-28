@@ -39,7 +39,7 @@ static VALUE initialize(VALUE self, VALUE rb_array) {
   rb_iv_set(self, "@revolution_number", INT2NUM(tle.revolution_number));
   rb_iv_set(self, "@classification", rb_str_new(&(tle.classification), 1));
   rb_iv_set(self, "@ephemeris_type", rb_str_new(&(tle.ephemeris_type), 1));
-  // The buffer for intl_desig has space of a NUL.
+  // The buffer for intl_desig has space for a NUL.
   rb_iv_set(self, "@intl_desig", rb_str_new(tle.intl_desig, sizeof tle.intl_desig - 1));
 
   return self;
