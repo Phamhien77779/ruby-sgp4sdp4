@@ -5,7 +5,7 @@ require "minitest/autorun"
 require "minitest/pride"
 require "sgp4"
 
-class TestTest < MiniTest::Test
+class Sgp4Test < MiniTest::Test
   include Sgp4
 
   def test_tle_from_string
