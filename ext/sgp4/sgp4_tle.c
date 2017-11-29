@@ -58,7 +58,10 @@ static VALUE initialize(VALUE self, VALUE rb_array) {
   rb_iv_set(self, "@xno", DBL2NUM(satrec-> no));
   rb_iv_set(self, "@norad_number", INT2NUM(satrec-> satnum));
   // rb_iv_set(self, "@bulletin_number", INT2NUM(satrec-> bulletin_number));
-  rb_iv_set(self, "@revolution_number", INT2NUM(satrec-> epochtynumrev));
+  char tbuff[6];
+  memcpy( tbuff, StringValueCStr(line2) + 63, 5);
+  tbuff[5] = '\0';
+  rb_iv_set(self, "@revolution_number", INT2NUM(atoi(tbuff)));
   // rb_iv_set(self, "@classification", rb_str_new(&(satrec-> classification), 1));
   // rb_iv_set(self, "@ephemeris_type", rb_str_new(&(satrec-> ephemeris_type), 1));
   // rb_iv_set(self, "@intl_desig", rb_str_new2(satrec-> intl_desig));

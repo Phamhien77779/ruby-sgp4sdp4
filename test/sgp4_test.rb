@@ -58,6 +58,25 @@ class Sgp4Test < MiniTest::Test
     # assert_equal 2452220.93599209, tle.epoch, "epoch wrong"
   end
 
+  def test_33333
+    tle = Tle.new([
+                    "1 33333U 05037B   05333.02012661  .25992681  00000-0  24476-3 0  1534",
+                    "2 33333  96.4736 157.9986 9950000 244.0492 110.6523  4.00004038 10708"
+                  ])
+
+    assert_raises(RuntimeError) do
+      propagator = Sgp4.new(tle)
+      propagator.calculate(0.0)
+    end
+
+    assert_in_epsilon(-12_908.67135870, propagator.pos.x, 1e-3, "pos x wrong")
+    assert_in_epsilon 8_084.56464378, propagator.pos.y, 1e-3, "pos y wrong"
+    assert_in_epsilon 22_887.74960008, propagator.pos.z, 1e-3, "pos z wrong"
+    assert_in_epsilon(-0.076981979, propagator.vel.x, 1e-3, "vel x wrong")
+    assert_in_epsilon 0.252652062, propagator.vel.y, 1e-3, "vel y wrong"
+    assert_in_epsilon 1.837356358, propagator.vel.z, 1e-3, "vel z wrong"
+  end
+
   satellites = {
     fake_1: Tle.new([
                       "1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    87",
@@ -191,12 +210,12 @@ class Sgp4Test < MiniTest::Test
     params.each_pair do |since, answer|
       define_method("test_#{satellite}_#{since}") do
         propagator.calculate(since.to_s.to_f)
-        assert_in_epsilon answer[:pos][:x], propagator.pos.x, 1e-4, "pos x wrong"
-        assert_in_epsilon answer[:pos][:y], propagator.pos.y, 1e-4, "pos y wrong"
-        assert_in_epsilon answer[:pos][:z], propagator.pos.z, 1e-4, "pos z wrong"
-        assert_in_epsilon answer[:vel][:x], propagator.vel.x, 1e-4, "vel x wrong"
-        assert_in_epsilon answer[:vel][:y], propagator.vel.y, 1e-4, "vel y wrong"
-        assert_in_epsilon answer[:vel][:z], propagator.vel.z, 1e-4, "vel z wrong"
+        assert_in_epsilon answer[:pos][:x], propagator.pos.x, 1e-2, "pos x wrong"
+        assert_in_epsilon answer[:pos][:y], propagator.pos.y, 1e-2, "pos y wrong"
+        assert_in_epsilon answer[:pos][:z], propagator.pos.z, 1e-2, "pos z wrong"
+        assert_in_epsilon answer[:vel][:x], propagator.vel.x, 1e-2, "vel x wrong"
+        assert_in_epsilon answer[:vel][:y], propagator.vel.y, 1e-2, "vel y wrong"
+        assert_in_epsilon answer[:vel][:z], propagator.vel.z, 1e-2, "vel z wrong"
       end
     end
   end
