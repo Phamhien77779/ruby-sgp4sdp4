@@ -22,5 +22,6 @@ void get_c_tle(VALUE self, tle_t *cTle) {
   tmp_s = rb_iv_get(rTle, "@ephemeris_type");
   cTle-> ephemeris_type = *StringValueCStr(tmp_s);
   tmp_s = rb_iv_get(rTle, "@intl_desig");
-  strncpy(cTle-> intl_desig, StringValueCStr(tmp_s), sizeof(cTle-> intl_desig));
+  strncpy(cTle-> intl_desig, StringValueCStr(tmp_s), sizeof(cTle-> intl_desig) - 1);
+  // printf("%s(%d): intl_desig: %.*s\n", __FILE__, __LINE__, (int)(sizeof cTle-> intl_desig - 1), cTle-> intl_desig);
 }

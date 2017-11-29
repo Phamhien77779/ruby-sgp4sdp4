@@ -12,12 +12,13 @@ static VALUE initialize(VALUE self, VALUE rb_array) {
   Check_Type(rb_array, T_ARRAY);
 
   VALUE line1 = rb_ary_entry(rb_array, 0);
-  VALUE line2 = rb_ary_entry(rb_array, 1);
-  // puts(l1 = StringValueCStr(line1));
+  l1 = StringValueCStr(line1);
   // printf("%s length: %ld\n", l1, strlen(l1));
+  VALUE line2 = rb_ary_entry(rb_array, 1);
   if (parse_elements(StringValueCStr(line1), StringValueCStr(line2), &tle) < 0) {
     rb_raise(rb_eRuntimeError, "Unparseable two-line elements");
   }
+  // printf("%s(%d): intl_desig: %.*s\n", __FILE__, __LINE__, (int)(sizeof tle.intl_desig - 1), tle.intl_desig);
 
   // printf("tle.epoch: %lf\n", tle.epoch);
 
@@ -40,6 +41,7 @@ static VALUE initialize(VALUE self, VALUE rb_array) {
   rb_iv_set(self, "@classification", rb_str_new(&(tle.classification), 1));
   rb_iv_set(self, "@ephemeris_type", rb_str_new(&(tle.ephemeris_type), 1));
   // The buffer for intl_desig has space for a NUL.
+  // printf("%s(%d): intl_desig: %.*s\n", __FILE__, __LINE__, (int)(sizeof tle.intl_desig - 1), tle.intl_desig);
   rb_iv_set(self, "@intl_desig", rb_str_new(tle.intl_desig, sizeof tle.intl_desig - 1));
 
   return self;

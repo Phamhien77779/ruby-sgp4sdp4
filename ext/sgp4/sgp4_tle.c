@@ -20,12 +20,17 @@ static VALUE initialize(VALUE self, VALUE rb_array) {
 
   Check_Type(rb_array, T_ARRAY);
 
-  VALUE line1 = rb_ary_entry(rb_array, 0);
-  VALUE line2 = rb_ary_entry(rb_array, 1);
+  // NOTE: This egregious hack because twoline2rv modifies the input strings.
+  char line1[69];
+  VALUE tmp = rb_ary_entry(rb_array, 0);
+  memcpy(line1, StringValueCStr(tmp), sizeof line1);
+  char line2[69];
+  tmp = rb_ary_entry(rb_array, 1);
+  memcpy(line2, StringValueCStr(tmp), sizeof line2);
 
   Data_Get_Struct(self, elsetrec, satrec);
-  twoline2rv_c(StringValueCStr(line1),
-    StringValueCStr(line2),
+  twoline2rv_c(line1,
+    line2,
     'c', // typerun, Hard code to get useless start and stop time.
     'm', // typeinput, Believed to be don't care with the other hard coding.
     'i', // opsmode, Hard code to "improved" instead of best guess of AFSPC.
@@ -59,7 +64,7 @@ static VALUE initialize(VALUE self, VALUE rb_array) {
   rb_iv_set(self, "@norad_number", INT2NUM(satrec-> satnum));
   // rb_iv_set(self, "@bulletin_number", INT2NUM(satrec-> bulletin_number));
   char tbuff[6];
-  memcpy( tbuff, StringValueCStr(line2) + 63, 5);
+  memcpy( tbuff, line2 + 63, 5);
   tbuff[5] = '\0';
   rb_iv_set(self, "@revolution_number", INT2NUM(atoi(tbuff)));
   // rb_iv_set(self, "@classification", rb_str_new(&(satrec-> classification), 1));

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Run tests like this: ruby -Itest:lib test/*_test.rb [--seed 12345]
+# Run tests like this: ruby -Itest:lib test/*_test.rb SEED=12345
 require "minitest/autorun"
 require "minitest/pride"
 require "sgp4sdp4"
