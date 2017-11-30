@@ -13,7 +13,9 @@ static VALUE initialize(VALUE self, VALUE rb_array) {
   char *l1;
 
   // Needed for software the way it was packaged.
-  gravconsttype whichconst = wgs84; // Hard code for now.
+  // The test data distributed with the STR #3 revised report assumes
+  // wgs72. wgs84 will cause significantly different answers.
+  gravconsttype whichconst = wgs72; // Hard code for now.
   elsetrec *satrec;
   // Only needed for interface to function:
   double startmfe, stopmfe, deltamin;

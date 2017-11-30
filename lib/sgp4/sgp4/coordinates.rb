@@ -4,6 +4,10 @@ module Sgp4
   # x, y, and z values. "Coordinates" is a bit of a misnomer,
   # as the values can be position or velocity.
   class Coordinates
+    def distance(other)
+      Math.sqrt((other.x - x)**2 + (other.y - y)**2 + (other.z - z)**2)
+    end
+
     def initialize(x, y, z)
       @x = x
       @y = y

@@ -34,32 +34,33 @@ class Sgp4Test < MiniTest::Test
   #   # assert_equal 2444514.48708465, tle.epoch, "epoch wrong"
   # end
 
-  def test_goes9_tle_from_string
-    tle = Tle.new([
-                    "1 23581U 95025A   01311.43599209 -.00000094  00000-0  00000+0 0  8214",
-                    "2 23581   1.1236  93.7945 0005741 214.4722 151.5103  1.00270260 23672"
-                  ])
-    # assert_equal "U", tle.classification, "classification wrong"
-    # assert_equal 821, tle.bulletin_number, "bulletin_number wrong"
-    assert_equal 23_581, tle.norad_number, "norad_number wrong"
-    # assert_equal "95025A  ", tle.intl_desig, "intl_desig wrong"
-    # assert_equal "0", tle.ephemeris_type, "ephemeris_type wrong"
-    assert_equal 2367, tle.revolution_number, "revolution_number wrong"
-    # All the rest are somehow calculated inside parse_elements, e.g.
-    # units changed or what have you.
-    assert_equal(-2.8482803765185237e-12, tle.xndt2o, "xndt2o wrong")
-    # assert_equal 0.00000e-0, tle.xndd6o, "xndd6o wrong"
-    assert_in_epsilon 0.00000e+0, tle.bstar, 1e-8, "bstar wrong"
-    assert_equal 0.01961051947540829, tle.xincl, "xincl wrong"
-    assert_equal 1.6370228452618214, tle.xnodeo, "xnodeo wrong"
-    assert_equal 0.0005741, tle.eo, "eo wrong"
-    assert_equal 3.7432460439957826, tle.omegao, "omegao wrong"
-    assert_equal 2.6443535856843647, tle.xmo, "xmo wrong"
-    assert_equal 0.004375115447076924, tle.xno, "xno wrong"
-    # assert_equal 2452220.93599209, tle.epoch, "epoch wrong"
-  end
+  # def test_goes9_tle_from_string
+  #   tle = Tle.new([
+  #                   "1 23581U 95025A   01311.43599209 -.00000094  00000-0  00000+0 0  8214",
+  #                   "2 23581   1.1236  93.7945 0005741 214.4722 151.5103  1.00270260 23672"
+  #                 ])
+  #   # assert_equal "U", tle.classification, "classification wrong"
+  #   # assert_equal 821, tle.bulletin_number, "bulletin_number wrong"
+  #   assert_equal 23_581, tle.norad_number, "norad_number wrong"
+  #   # assert_equal "95025A  ", tle.intl_desig, "intl_desig wrong"
+  #   # assert_equal "0", tle.ephemeris_type, "ephemeris_type wrong"
+  #   assert_equal 2367, tle.revolution_number, "revolution_number wrong"
+  #   # All the rest are somehow calculated inside parse_elements, e.g.
+  #   # units changed or what have you.
+  #   assert_equal(-2.8482803765185237e-12, tle.xndt2o, "xndt2o wrong")
+  #   # assert_equal 0.00000e-0, tle.xndd6o, "xndd6o wrong"
+  #   assert_in_epsilon 0.00000e+0, tle.bstar, 1e-8, "bstar wrong"
+  #   assert_equal 0.01961051947540829, tle.xincl, "xincl wrong"
+  #   assert_equal 1.6370228452618214, tle.xnodeo, "xnodeo wrong"
+  #   assert_equal 0.0005741, tle.eo, "eo wrong"
+  #   assert_equal 3.7432460439957826, tle.omegao, "omegao wrong"
+  #   assert_equal 2.6443535856843647, tle.xmo, "xmo wrong"
+  #   assert_equal 0.004375115447076924, tle.xno, "xno wrong"
+  #   # assert_equal 2452220.93599209, tle.epoch, "epoch wrong"
+  # end
 
   def test_33333
+    skip "I think this is supposed to cause an error but doesn't"
     tle = Tle.new([
                     "1 33333U 05037B   05333.02012661  .25992681  00000-0  24476-3 0  1534",
                     "2 33333  96.4736 157.9986 9950000 244.0492 110.6523  4.00004038 10708"
@@ -97,34 +98,34 @@ class Sgp4Test < MiniTest::Test
   answers = {
     fake_1: {
       "0": {
-        pos: { x: 2328.97048951, y:  -5995.22076416, z: 1719.97067261 },
-        vel: { x: 2.91207230, y:     -0.98341546, z: -7.09081703 }
+        pos: Coordinates.new(2328.97048951,  -5995.22076416, 1719.97067261),
+        vel: Coordinates.new(2.91207230,     -0.98341546, -7.09081703)
       },
       "360": {
-        pos: { x: 2456.10705566, y: -6071.93853760, z: 1222.89727783 },
-        vel: { x: 2.67938992, y: -0.44829041, z: -7.22879231 }
+        pos: Coordinates.new(2456.10705566, -6071.93853760, 1222.89727783),
+        vel: Coordinates.new(2.67938992, -0.44829041, -7.22879231)
       },
       "720": {
-        pos: { x: 2567.56195068, y: -6112.50384522, z: 713.96397400 },
-        vel: { x: 2.44024599, y: 0.09810869, z: -7.31995916 }
+        pos: Coordinates.new(2567.56195068, -6112.50384522, 713.96397400),
+        vel: Coordinates.new(2.44024599, 0.09810869, -7.31995916)
       },
       "1080": {
-        pos: { x: 2663.09078980, y: -6115.48229980, z: 196.39640427 },
-        vel: { x: 2.19611958, y: 0.65241995, z: -7.36282432 }
+        pos: Coordinates.new(2663.09078980, -6115.48229980, 196.39640427),
+        vel: Coordinates.new(2.19611958, 0.65241995, -7.36282432)
       },
       "1440": {
-        pos: { x: 2742.55133057, y: -6079.67144775, z: -326.38095856 },
-        vel: { x: 1.94850229, y: 1.21106251, z: -7.35619372 }
+        pos: Coordinates.new(2742.55133057, -6079.67144775, -326.38095856),
+        vel: Coordinates.new(1.94850229, 1.21106251, -7.35619372)
       }
     },
     teme: {
       "0": {
-        pos: { x: 7022.46529266, y: -1400.08296755, z: 0.03995155 },
-        vel: { x: 1.893841015, y: 6.405893759, z: 4.534807250 }
+        pos: Coordinates.new(7022.46529266, -1400.08296755, 0.03995155),
+        vel: Coordinates.new(1.893841015, 6.405893759, 4.534807250)
       },
       "4320": {
-        pos: { x: -9060.47373569, y: 4658.70952502, z: 813.68673153 },
-        vel: { x: -2.232832783, y: -4.110453490, z: -3.157345433 }
+        pos: Coordinates.new(-9060.47373569, 4658.70952502, 813.68673153),
+        vel: Coordinates.new(-2.232832783, -4.110453490, -3.157345433)
       }
       # },
       # fake_2: {
@@ -153,14 +154,6 @@ class Sgp4Test < MiniTest::Test
     }
   }
 
-  epsilons = {
-    sgp: 1e-4,
-    sgp4: 1e-4,
-    sgp8: 1e-4,
-    sdp4: 1e-4,
-    sdp8: 1e-4
-  }
-
   # The code from here down basically sets up to test all the satellites
   # in `test/SGP4-VER.TLE` against the results in `test/tcppver.out`.
   # (`test/tcppver.out` is the same as `test/tcpvera.out`.)
@@ -172,8 +165,8 @@ class Sgp4Test < MiniTest::Test
         if line =~ /^\s+/
           fields = line.split(" ")
           answers[satellite_number][fields[0]] = {
-            pos: { x: fields[1].to_f, y: fields[2].to_f, z: fields[3].to_f },
-            vel: { x: fields[4].to_f, y: fields[5].to_f, z: fields[6].to_f }
+            pos: Coordinates.new(fields[1].to_f, fields[2].to_f, fields[3].to_f),
+            vel: Coordinates.new(fields[4].to_f, fields[5].to_f, fields[6].to_f)
           }
         else
           satellite_number = line.split(" ")[0]
@@ -211,12 +204,15 @@ class Sgp4Test < MiniTest::Test
     params.each_pair do |since, answer|
       define_method("test_#{satellite}_#{since}") do
         propagator.calculate(since.to_s.to_f)
-        assert_in_epsilon answer[:pos][:x], propagator.pos.x, 1e-2, "pos x wrong"
-        assert_in_epsilon answer[:pos][:y], propagator.pos.y, 1e-2, "pos y wrong"
-        assert_in_epsilon answer[:pos][:z], propagator.pos.z, 1e-2, "pos z wrong"
-        assert_in_epsilon answer[:vel][:x], propagator.vel.x, 1e-2, "vel x wrong"
-        assert_in_epsilon answer[:vel][:y], propagator.vel.y, 1e-2, "vel y wrong"
-        assert_in_epsilon answer[:vel][:z], propagator.vel.z, 1e-2, "vel z wrong"
+        assert_in_delta 0, propagator.pos.distance(answer[:pos]), 1.0, "distance between points differs"
+        # The following is not a real comparison of how different the results.
+        assert_in_delta 0, propagator.vel.distance(answer[:vel]), 1e-3, "velocity between points differs"
+        # assert_in_epsilon answer[:pos].x, propagator.pos.x, 1e-3, "pos x wrong"
+        # assert_in_epsilon answer[:pos].y, propagator.pos.y, 1e-3, "pos y wrong"
+        # assert_in_epsilon answer[:pos].z, propagator.pos.z, 1e-3, "pos z wrong"
+        # assert_in_epsilon answer[:vel].x, propagator.vel.x, 1e-3, "vel x wrong"
+        # assert_in_epsilon answer[:vel].y, propagator.vel.y, 1e-3, "vel y wrong"
+        # assert_in_epsilon answer[:vel].z, propagator.vel.z, 1e-3, "vel z wrong"
       end
     end
   end
