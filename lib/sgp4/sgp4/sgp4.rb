@@ -39,11 +39,12 @@ module Sgp4
     attr_reader :tle
 
     # @return [Coordinates] the position of the satellite
-    #   after {#calculate} has been called.
+    #   after {#calculate} has been called, in kilometres.
     attr_reader :pos
 
     # @return [Coordinates] the velocity of the satellite
-    #   after {#calculate} has been called.
+    #   after {#calculate} has been called,
+    #   in kilometres per second.
     attr_reader :vel
   end
 end

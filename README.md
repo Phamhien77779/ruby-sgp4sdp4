@@ -6,13 +6,26 @@ based on NORAD Two-Line Elements.
 This is, I believe, the most widely used way of predicting a satellite location.
 
 This code is very much a work in progress.
+The API is almost guaranteed to change.
+
+# Use
+1. Obtain a two-line element (TLE) set for the satellite you're interested in,
+where the TLE was observed at a time close to when you
+want to locate the satellite
+2. Initialize the propagator with the two line elements:
+```
+    propagator = Sgp4.new([line1, line2])
+```
+3. Propagate the orbit to 15 minutes after the TLE was observed:
+```
+    propagator.calculate(15)
+    puts "Position: #{propagator.pos}"
+    puts "Velocity: #{propagator.vel}"
+```
 
 # Road Map
 The priorities right now are to:
 
-* Understand what's causing the differences between the test results
-from the Celestrak source code, and this code
-* Document the methods
 * Publish to `rubygems.org` as a pre-release gem
 
 Later, I hope to:
