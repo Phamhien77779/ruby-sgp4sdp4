@@ -2,7 +2,8 @@
 
 module Sgp4
   class Tle
-    attr_reader :xndt2o,
+    attr_reader :epoch,
+      :xndt2o,
       :bstar,
       :xincl,
       :xnodeo,

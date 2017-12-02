@@ -50,7 +50,7 @@ static VALUE initialize(VALUE self, VALUE rb_array) {
 
   // printf("tle.epoch: %lf\n", tle.epoch);
 
-  // rb_iv_set(self, "@epoch", DBL2NUM(satrec-> epoch));
+  rb_iv_set(self, "@epoch", DBL2NUM(satrec-> jdsatepoch));
   // printf("@epoch: %lf\n", NUM2DBL(rb_iv_get(self, "@epoch")));
   // printf("satrec-> xndt2o: %f\n", satrec-> xndt2o);
   rb_iv_set(self, "@xndt2o", DBL2NUM(satrec-> nddot));
