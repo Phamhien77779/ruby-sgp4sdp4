@@ -46,5 +46,11 @@ module Sgp4
     #   after {#calculate} has been called,
     #   in kilometres per second.
     attr_reader :vel
+
+    class << self
+      def to_degrees(radians)
+        radians * 180.0 / Math::PI
+      end
+    end
   end
 end

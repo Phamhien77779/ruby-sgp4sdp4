@@ -55,13 +55,18 @@ static VALUE calculate(VALUE self, VALUE since) {
   cEphemeris = rb_const_get(mSgp4, rb_intern("Ephemeris"));
   VALUE ephemeris = rb_funcall(cEphemeris,
     rb_intern("new"),
-    6,
+    11,
     datetime,
     rPos,
     rVel,
     DBL2NUM(p),
     DBL2NUM(a),
-    DBL2NUM(ecc));
+    DBL2NUM(ecc),
+    DBL2NUM(incl),
+    DBL2NUM(omega),
+    DBL2NUM(argp),
+    DBL2NUM(nu),
+    DBL2NUM(m));
 
   return ephemeris;
 }

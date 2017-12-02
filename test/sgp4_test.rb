@@ -180,6 +180,11 @@ class Sgp4Test < MiniTest::Test
           answers[satellite_number][fields[0]][:t] = DateTime.parse(time) if time
           answers[satellite_number][fields[0]][:a] = fields[7].to_f if fields[7]
           answers[satellite_number][fields[0]][:ecc] = fields[8].to_f if fields[8]
+          answers[satellite_number][fields[0]][:incl] = fields[9].to_f if fields[9]
+          answers[satellite_number][fields[0]][:omega] = fields[10].to_f if fields[10]
+          answers[satellite_number][fields[0]][:argp] = fields[11].to_f if fields[11]
+          answers[satellite_number][fields[0]][:nu] = fields[12].to_f if fields[12]
+          answers[satellite_number][fields[0]][:m] = fields[13].to_f if fields[13]
         else
           satellite_number = line.split(" ")[0]
           answers[satellite_number] = {}
@@ -229,6 +234,12 @@ class Sgp4Test < MiniTest::Test
         assert_in_delta(answer[:t], ephemeris.t, 1e-6) if answer[:t]
         assert_in_delta(answer[:a], ephemeris.a, 1e-5) if answer[:a]
         assert_in_delta(answer[:ecc], ephemeris.ecc, 1e-6) if answer[:ecc]
+        assert_in_delta(answer[:incl], Sgp4.to_degrees(ephemeris.incl), 1e-5) if answer[:incl]
+        assert_in_delta(answer[:omega], Sgp4.to_degrees(ephemeris.omega), 1e-5) if answer[:omega]
+        # TODO: Why is the argument of perigee so far off?
+        assert_in_delta(answer[:argp], Sgp4.to_degrees(ephemeris.argp), 3e-3) if answer[:argp]
+        assert_in_delta(answer[:nu], Sgp4.to_degrees(ephemeris.nu), 1e-5) if answer[:nu]
+        assert_in_delta(answer[:m], Sgp4.to_degrees(ephemeris.m), 1e-5) if answer[:m]
       end
     end
   end
