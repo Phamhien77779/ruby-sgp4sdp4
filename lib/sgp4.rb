@@ -2,6 +2,7 @@
 
 require "sgp4/sgp4"
 require "sgp4/sgp4/coordinates"
+require "sgp4/sgp4/ephemeris"
 require "sgp4/sgp4/sgp4"
 require "sgp4/sgp4/tle"
 

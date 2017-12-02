@@ -4,6 +4,7 @@
 require "minitest/autorun"
 require "minitest/pride"
 require "sgp4"
+require "date" # To get DateTime
 
 class Sgp4Test < MiniTest::Test
   include Sgp4
@@ -164,10 +165,18 @@ class Sgp4Test < MiniTest::Test
       f.read.each_line.reduce(nil) do |satellite_number, line|
         if line =~ /^\s+/
           fields = line.split(" ")
+          time = line[188..-1]
+          if time
+            time[4] = time[7] = "-"
+            [5, 8].each do |i|
+              time[i] = "0" if time[i] == " "
+            end
+          end
           answers[satellite_number][fields[0]] = {
             pos: Coordinates.new(fields[1].to_f, fields[2].to_f, fields[3].to_f),
             vel: Coordinates.new(fields[4].to_f, fields[5].to_f, fields[6].to_f)
           }
+          answers[satellite_number][fields[0]][:t] = DateTime.parse(time) if time
         else
           satellite_number = line.split(" ")[0]
           answers[satellite_number] = {}
@@ -203,7 +212,7 @@ class Sgp4Test < MiniTest::Test
     propagator = Sgp4.new(tle)
     params.each_pair do |since, answer|
       define_method("test_#{satellite}_#{since}") do
-        propagator.calculate(since.to_s.to_f)
+        ephemeris = propagator.calculate(since.to_s.to_f)
         assert_in_delta 0, propagator.pos.distance(answer[:pos]), 1.0, "distance between points differs"
         # The following is not a real comparison of how different the results.
         assert_in_delta 0, propagator.vel.distance(answer[:vel]), 1e-3, "velocity between points differs"
@@ -213,6 +222,7 @@ class Sgp4Test < MiniTest::Test
         # assert_in_epsilon answer[:vel].x, propagator.vel.x, 1e-3, "vel x wrong"
         # assert_in_epsilon answer[:vel].y, propagator.vel.y, 1e-3, "vel y wrong"
         # assert_in_epsilon answer[:vel].z, propagator.vel.z, 1e-3, "vel z wrong"
+        assert_in_delta(answer[:t], ephemeris.t, 1e-6) if answer[:t]
       end
     end
   end

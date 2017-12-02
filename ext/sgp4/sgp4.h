@@ -6,6 +6,7 @@
 
 extern VALUE mSgp4;
 extern VALUE cSgp4_coordinates;
+extern VALUE cSgp4_ephemeris;
 
 extern void Init_sgp4_tle();
 extern void Init_sgp4_sgp4();
