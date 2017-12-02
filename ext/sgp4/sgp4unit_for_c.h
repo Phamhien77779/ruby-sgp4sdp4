@@ -3,6 +3,19 @@
 
 #include <sgp4types.h>
 
+void getgravconst
+     (
+      gravconsttype whichconst,
+      double& tumin,
+      double& mu,
+      double& radiusearthkm,
+      double& xke,
+      double& j2,
+      double& j3,
+      double& j4,
+      double& j3oj2
+     );
+
 bool sgp4
      (
        gravconsttype whichconst, elsetrec& satrec,  double tsince,

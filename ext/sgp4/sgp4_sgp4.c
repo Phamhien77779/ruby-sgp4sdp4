@@ -46,8 +46,22 @@ static VALUE calculate(VALUE self, VALUE since) {
     INT2NUM(min),
     DBL2NUM(sec));
 
+  double mu, radiusearthkm, tumin, xke, j2, j3, j4, j3oj2;
+  getgravconst_c(NUM2INT(gravitational_constant), &tumin, &mu, &radiusearthkm, &xke, &j2, &j3, &j4, &j3oj2);
+
+  double p, a, ecc, incl, omega, argp, nu, m, arglat, truelon, lonper;
+  rv2coe_c(pos, vel, mu, &p, &a, &ecc, &incl, &omega, &argp, &nu, &m, &arglat, &truelon, &lonper);
+
   cEphemeris = rb_const_get(mSgp4, rb_intern("Ephemeris"));
-  VALUE ephemeris = rb_funcall(cEphemeris, rb_intern("new"), 3, datetime, rPos, rVel);
+  VALUE ephemeris = rb_funcall(cEphemeris,
+    rb_intern("new"),
+    6,
+    datetime,
+    rPos,
+    rVel,
+    DBL2NUM(p),
+    DBL2NUM(a),
+    DBL2NUM(ecc));
 
   return ephemeris;
 }

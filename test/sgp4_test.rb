@@ -172,11 +172,14 @@ class Sgp4Test < MiniTest::Test
               time[i] = "0" if time[i] == " "
             end
           end
+
           answers[satellite_number][fields[0]] = {
             pos: Coordinates.new(fields[1].to_f, fields[2].to_f, fields[3].to_f),
             vel: Coordinates.new(fields[4].to_f, fields[5].to_f, fields[6].to_f)
           }
           answers[satellite_number][fields[0]][:t] = DateTime.parse(time) if time
+          answers[satellite_number][fields[0]][:a] = fields[7].to_f if fields[7]
+          answers[satellite_number][fields[0]][:ecc] = fields[8].to_f if fields[8]
         else
           satellite_number = line.split(" ")[0]
           answers[satellite_number] = {}
@@ -213,6 +216,7 @@ class Sgp4Test < MiniTest::Test
     params.each_pair do |since, answer|
       define_method("test_#{satellite}_#{since}") do
         ephemeris = propagator.calculate(since.to_s.to_f)
+        # The error margins are determined mostly by eye-balling the results.
         assert_in_delta 0, ephemeris.pos.distance(answer[:pos]), 1.0, "distance between points differs"
         # The following is not a real comparison of how different the results.
         assert_in_delta 0, ephemeris.vel.distance(answer[:vel]), 1e-3, "velocity between points differs"
@@ -223,6 +227,8 @@ class Sgp4Test < MiniTest::Test
         # assert_in_epsilon answer[:vel].y, propagator.vel.y, 1e-3, "vel y wrong"
         # assert_in_epsilon answer[:vel].z, propagator.vel.z, 1e-3, "vel z wrong"
         assert_in_delta(answer[:t], ephemeris.t, 1e-6) if answer[:t]
+        assert_in_delta(answer[:a], ephemeris.a, 1e-5) if answer[:a]
+        assert_in_delta(answer[:ecc], ephemeris.ecc, 1e-6) if answer[:ecc]
       end
     end
   end
