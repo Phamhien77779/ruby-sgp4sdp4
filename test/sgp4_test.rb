@@ -215,7 +215,7 @@ class Sgp4Test < MiniTest::Test
         ephemeris = propagator.calculate(since.to_s.to_f)
         assert_in_delta 0, ephemeris.pos.distance(answer[:pos]), 1.0, "distance between points differs"
         # The following is not a real comparison of how different the results.
-        assert_in_delta 0, propagator.vel.distance(answer[:vel]), 1e-3, "velocity between points differs"
+        assert_in_delta 0, ephemeris.vel.distance(answer[:vel]), 1e-3, "velocity between points differs"
         # assert_in_epsilon answer[:pos].x, propagator.pos.x, 1e-3, "pos x wrong"
         # assert_in_epsilon answer[:pos].y, propagator.pos.y, 1e-3, "pos y wrong"
         # assert_in_epsilon answer[:pos].z, propagator.pos.z, 1e-3, "pos z wrong"
